@@ -1,0 +1,140 @@
+# Androforge — Supabase Setup Guide
+
+## 1. Create Your Project
+
+1. Go to https://supabase.com and sign in
+2. Click **New Project** → choose your org
+3. Fill in:
+   - **Name:** `androforge`
+   - **Database Password:** (save this somewhere safe)
+   - **Region:** South Asia (Mumbai) — closest to Chennai
+4. Wait ~2 min for provisioning
+
+---
+
+## 2. Grab Your Credentials
+
+In your Supabase dashboard → **Project Settings → API**:
+
+- Copy `Project URL` → this is your `VITE_SUPABASE_URL`
+- Copy `anon public` key → this is your `VITE_SUPABASE_ANON_KEY`
+
+Create a `.env.local` file in your project root:
+
+```env
+VITE_SUPABASE_URL=https://xxxxxxxxxxx.supabase.co
+VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
+> ⚠️ Add `.env.local` to your `.gitignore` — never commit this file.
+
+---
+
+## 3. Run the Schema SQL
+
+In your Supabase dashboard → **SQL Editor** → **New Query** → paste and run:
+
+```sql
+-- =============================================
+-- ANDROFORGE HACKATHON — DATABASE SCHEMA
+-- Temporal Cybernetics Edition
+-- =============================================
+
+-- REGISTRATIONS TABLE
+create table if not exists public.registrations (
+  id           uuid primary key default gen_random_uuid(),
+  name         text not null,
+  email        text not null unique,
+  phone        text not null,
+  college      text not null,
+  team_name    text not null,
+  track        text not null check (track in ('AI/ML', 'Web3', 'FinTech', 'HealthTech', 'Open Innovation')),
+  created_at   timestamptz not null default now()
+);
+
+-- TEAMS TABLE (auto-populated via trigger)
+create table if not exists public.teams (
+  id           uuid primary key default gen_random_uuid(),
+  team_name    text not null unique,
+  member_count int not null default 1,
+  college      text not null,
+  created_at   timestamptz not null default now()
+);
+
+-- =============================================
+-- TRIGGER: Auto-upsert teams on registration
+-- =============================================
+create or replace function public.sync_teams()
+returns trigger as $$
+begin
+  insert into public.teams (team_name, member_count, college)
+  values (NEW.team_name, 1, NEW.college)
+  on conflict (team_name)
+  do update set
+    member_count = teams.member_count + 1;
+  return NEW;
+end;
+$$ language plpgsql security definer;
+
+create trigger on_registration_insert
+  after insert on public.registrations
+  for each row execute function public.sync_teams();
+
+-- =============================================
+-- ROW LEVEL SECURITY
+-- =============================================
+alter table public.registrations enable row level security;
+alter table public.teams enable row level security;
+
+-- Anyone can INSERT a registration (for the form)
+create policy "Allow public registration inserts"
+  on public.registrations for insert
+  with check (true);
+
+-- Anyone can SELECT stats (for the live dashboard)
+create policy "Allow public read for stats"
+  on public.registrations for select
+  using (true);
+
+create policy "Allow public read teams"
+  on public.teams for select
+  using (true);
+
+-- =============================================
+-- REAL-TIME: Enable broadcast on registrations
+-- =============================================
+alter publication supabase_realtime add table public.registrations;
+alter publication supabase_realtime add table public.teams;
+```
+
+---
+
+## 4. Enable Real-Time in Dashboard
+
+1. Go to **Database → Replication**
+2. Make sure `registrations` and `teams` tables have the **green toggle ON**
+
+---
+
+## 5. Vercel Environment Variables
+
+When deploying, add these in Vercel → Project Settings → Environment Variables:
+
+| Key | Value |
+|-----|-------|
+| `VITE_SUPABASE_URL` | your project URL |
+| `VITE_SUPABASE_ANON_KEY` | your anon key |
+
+---
+
+## Free Tier Limits (FYI)
+
+| Resource | Limit |
+|----------|-------|
+| Database | 500 MB |
+| Bandwidth | 5 GB/month |
+| API Requests | Unlimited |
+| Real-time connections | 200 concurrent |
+| Edge Functions | 500K calls/month |
+
+> For a hackathon with ~500 participants, you're well within limits. ✅

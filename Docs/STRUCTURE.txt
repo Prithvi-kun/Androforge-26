@@ -1,0 +1,129 @@
+# Androforge — File & Folder Structure
+
+```
+androforge/
+├── .env.local                          # ← YOUR SECRETS (never commit)
+├── .gitignore
+├── index.html
+├── package.json
+├── tailwind.config.js
+├── vite.config.js
+│
+├── SUPABASE_SETUP.md                   # ← Setup guide (this repo)
+├── STRUCTURE.md                        # ← You are here
+│
+└── src/
+    │
+    ├── lib/
+    │   └── supabase.js                 # Supabase client + helper fns
+    │
+    ├── hooks/
+    │   └── useRegistrationStats.js     # Real-time stats hook
+    │
+    ├── components/
+    │   ├── RegistrationForm.jsx        # Form with validation
+    │   ├── LiveStats.jsx               # FOMO stat counters
+    │   ├── Navbar.jsx                  # (you'll build this)
+    │   ├── Hero.jsx                    # (you'll build this)
+    │   ├── CountdownTimer.jsx          # (you'll build this)
+    │   └── Footer.jsx                  # (you'll build this)
+    │
+    ├── pages/
+    │   ├── Home.jsx                    # Assembles Hero + LiveStats + ...
+    │   └── Register.jsx                # Wraps RegistrationForm
+    │
+    ├── App.jsx                         # Router setup
+    └── main.jsx                        # Entry point
+```
+
+---
+
+## Component Responsibility Map
+
+| File | Does what |
+|------|-----------|
+| `lib/supabase.js` | Single Supabase client + `submitRegistration()` + `fetchStats()` |
+| `hooks/useRegistrationStats.js` | Subscribes to real-time INSERTs, returns `{ participantCount, teamCount, collegeCount, loading, error }` |
+| `components/RegistrationForm.jsx` | Controlled form, client-side validation, calls `submitRegistration()`, shows success/error state |
+| `components/LiveStats.jsx` | Consumes `useRegistrationStats`, renders 3 animated stat cards |
+
+---
+
+## Install Commands
+
+```bash
+# 1. Scaffold with Vite
+npm create vite@latest androforge -- --template react
+cd androforge
+
+# 2. Install deps
+npm install @supabase/supabase-js framer-motion
+
+# 3. Install Tailwind
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+
+# 4. Start dev server
+npm run dev
+```
+
+---
+
+## tailwind.config.js
+
+```js
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}'],
+  theme: {
+    extend: {
+      fontFamily: {
+        mono: ['"JetBrains Mono"', '"Fira Code"', 'ui-monospace', 'monospace'],
+      },
+      animation: {
+        'ping-slow': 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite',
+      },
+    },
+  },
+  plugins: [],
+}
+```
+
+---
+
+## vite.config.js
+
+```js
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()],
+})
+```
+
+---
+
+## Recommended Google Fonts (add to index.html)
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+```
+
+Use `font-mono` (JetBrains Mono) for all code/data elements, `Space Grotesk` for body copy.
+
+---
+
+## Build Order Recommendation
+
+1. ✅ Supabase schema + client (`supabase.js`)
+2. ✅ `useRegistrationStats` hook
+3. ✅ `RegistrationForm` component
+4. ✅ `LiveStats` component
+5. ⬜ `Hero.jsx` — full-screen temporal cyberpunk intro
+6. ⬜ `CountdownTimer.jsx` — deadline countdown in monospace
+7. ⬜ `Navbar.jsx` — sticky, translucent, with glitch effect on logo
+8. ⬜ `Home.jsx` — assemble it all
+9. ⬜ `Register.jsx` — dedicated registration page
+10. ⬜ Deploy to Vercel (connect GitHub repo → auto-deploy)
