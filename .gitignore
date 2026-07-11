@@ -22,3 +22,6 @@ Thumbs.db
 # Logs
 *.log
 npm-debug.log*
+
+# Exclude oversized video assets
+assets/Black_Hole_1.mp4

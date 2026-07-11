@@ -51,7 +51,7 @@ export default function Footer() {
             </p>
 
             <div className="pt-12 mt-auto">
-              <a href="#" className="flex items-center space-x-3 text-cyber-silver hover:text-[#1F51FF] transition-colors duration-300 w-fit group">
+              <a href="#venue" className="flex items-center space-x-3 text-cyber-silver hover:text-[#1F51FF] transition-colors duration-300 w-fit group">
                 <MapPin className="w-5 h-5 group-hover:text-[#1F51FF] transition-colors" />
                 <span>SRM Ramapuram, Chennai</span>
               </a>

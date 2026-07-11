@@ -45,11 +45,11 @@ export default function Contact() {
           saturation={0}
           hueShift={140}
           twinkleIntensity={0.3}
-          rotationSpeed={0.1}
+          rotationSpeed={0.05}
           repulsionStrength={2}
           autoCenterRepulsion={0}
-          starSpeed={0.5}
-          speed={1}
+          starSpeed={0.2}
+          speed={0.6}
         />
       </div>
 
@@ -73,7 +73,7 @@ export default function Contact() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16 pointer-events-auto"
           >
-            <h2 className="text-4xl md:text-5xl font-orbitron font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-cyber-blue drop-shadow-[0_0_15px_rgba(14,165,233,0.5)] tracking-wider mb-6">
+            <h2 className="w-fit mx-auto text-4xl md:text-5xl font-heading font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-cyber-blue drop-shadow-[0_0_15px_rgba(14,165,233,0.5)] tracking-wider mb-6">
               COMMITTEE
             </h2>
           </motion.div>

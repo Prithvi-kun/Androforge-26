@@ -113,7 +113,7 @@ export default function Timeline() {
     >
       {/* Section heading */}
       <div className="text-center mb-4 pointer-events-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-heading font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-cyber-blue drop-shadow-[0_0_15px_rgba(14,165,233,0.5)] tracking-wider">
+        <h2 className="w-fit mx-auto text-4xl md:text-5xl font-heading font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-cyber-blue drop-shadow-[0_0_15px_rgba(14,165,233,0.5)] tracking-wider">
           TIMELINE
         </h2>
         <p className="mt-4 text-cyber-silver max-w-xl mx-auto text-lg">

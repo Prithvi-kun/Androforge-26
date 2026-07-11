@@ -26,7 +26,7 @@ export default function Committee() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16 pointer-events-auto"
         >
-          <h2 className="text-4xl md:text-5xl font-heading font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-cyber-blue drop-shadow-[0_0_15px_rgba(14,165,233,0.5)] tracking-wider mb-6">
+          <h2 className="w-fit mx-auto text-4xl md:text-5xl font-heading font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-cyber-blue drop-shadow-[0_0_15px_rgba(14,165,233,0.5)] tracking-wider mb-6">
             COMMITTEE
           </h2>
           <p className="text-cyber-silver text-lg max-w-2xl mx-auto">

@@ -21,7 +21,7 @@ export default function FloatingNav() {
   const [activeId, setActiveId] = useState('about');
   const [isVisible, setIsVisible] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [footerOffset, setFooterOffset] = useState(0);
+  const containerRef = useRef(null);
   const lastScrollY = useRef(0);
   const hideTimeout = useRef(null);
   const navigate = useNavigate();
@@ -30,18 +30,26 @@ export default function FloatingNav() {
 
   const isHomePage = location.pathname === '/' || location.pathname === '/home';
 
-  // ── Track footer position to push nav bar up ──
+  // ── Track footer position to push nav bar up without triggering re-renders ──
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      const footer = document.querySelector('footer');
-      if (!footer) return;
-      const footerRect = footer.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      
-      if (footerRect.top < windowHeight) {
-        setFooterOffset(windowHeight - footerRect.top);
-      } else {
-        setFooterOffset(0);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const footer = document.querySelector('footer');
+          if (footer && containerRef.current) {
+            const footerRect = footer.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            if (footerRect.top < windowHeight) {
+              const offset = windowHeight - footerRect.top;
+              containerRef.current.style.bottom = `${offset}px`;
+            } else {
+              containerRef.current.style.bottom = `0px`;
+            }
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
     
@@ -127,11 +135,12 @@ export default function FloatingNav() {
     <AnimatePresence>
       {isVisible && (
         <motion.div
+          ref={containerRef}
           initial={{ y: 80, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 80, opacity: 0 }}
           transition={{ type: 'spring', stiffness: 260, damping: 26 }}
-          style={{ position: 'fixed', bottom: footerOffset, left: 0, right: 0, zIndex: 100 }}
+          style={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 100 }}
         >
           <PillNav
             items={navItems}

@@ -52,7 +52,7 @@ export default function FAQ() {
   return (
     <section id="faq" className="w-full max-w-5xl mx-auto px-4 pt-12 pb-24 flex flex-col items-center">
       <div className="text-center mb-12 pointer-events-auto">
-        <h2 className="text-4xl md:text-5xl font-heading font-bold text-white tracking-wider mb-4">
+        <h2 className="w-fit mx-auto text-4xl md:text-5xl font-heading font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-cyber-blue drop-shadow-[0_0_15px_rgba(14,165,233,0.5)] tracking-wider mb-4">
           Frequently Asked Questions
         </h2>
         <p className="text-cyber-silver text-lg">
