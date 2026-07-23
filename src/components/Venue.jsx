@@ -3,7 +3,7 @@ import BorderGlow from './BorderGlow';
 
 export default function Venue() {
   const details = [
-    { icon: "📍", text: "45 mins from Chennai Central" },
+    { icon: "📍", text: "10 mins from Ashok Pillar metro" },
     { icon: "🅿️", text: "Free parking available" },
     { icon: "🍽️", text: "Food & refreshments provided" },
     { icon: "🛏️", text: "Accommodation arranged for outstation participants" }
@@ -45,9 +45,9 @@ export default function Venue() {
                   SRM Institute of Science and Technology
                 </h3>
                 <p className="font-mono text-sm text-cyber-blue mb-10 leading-relaxed">
-                  SRM Nagar, Kattankulathur,<br />
-                  Chengalpattu District,<br />
-                  Tamil Nadu 603203.
+                  Bharathi Salai, Ramapuram,<br />
+                  Chennai,<br />
+                  Tamil Nadu 600089.
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
@@ -72,7 +72,7 @@ export default function Venue() {
                 <div className="mt-auto pt-6 border-t border-cyber-blue/30">
                   <p className="font-mono text-sm text-gray-400 uppercase tracking-wider flex items-center gap-3">
                     <span className="w-2.5 h-2.5 rounded-full bg-cyber-neon animate-pulse" />
-                    Opposite Potheri Railway Station · On GST Road (NH45)
+                    Bharathi Salai · Ramapuram, Chennai
                   </p>
                 </div>
               </div>
@@ -88,7 +88,7 @@ export default function Venue() {
             className="lg:col-span-2 glass-card p-2 overflow-hidden h-[400px] lg:h-full border-cyber-blue/20 relative group rounded-xl"
           >
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3890.4534895672!2d80.04!3d12.82!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sSRM+Institute!5e0!3m2!1sen!2sin!4v1"
+              src="https://maps.google.com/maps?q=SRM+Institute+of+Science+and+Technology,+Ramapuram&t=&z=15&ie=UTF8&iwloc=&output=embed"
               className="w-full h-full filter invert-[90%] hue-rotate-180 brightness-[85%] contrast-[85%]"
               style={{ border: 0, borderRadius: '16px' }}
               allowFullScreen=""

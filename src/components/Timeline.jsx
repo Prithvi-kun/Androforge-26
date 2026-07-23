@@ -1,9 +1,9 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FileText, Code, Trophy, Rocket, Star } from 'lucide-react';
 import BorderGlow from './BorderGlow';
 
-/* ── Timeline data ─────────────────────────────────────────────── */
+/* ΓöÇΓöÇ Timeline data ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */
 const steps = [
   {
     number: '1',
@@ -42,7 +42,7 @@ const steps = [
   },
 ];
 
-/* ── Wave math constants ───────────────────────────────────────── */
+/* ΓöÇΓöÇ Wave math constants ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */
 const NODE_SPACING = 360;
 const WAVE_AMPLITUDE = 80;
 const PADDING_X = 200;
@@ -51,7 +51,7 @@ const MID_Y = SVG_HEIGHT / 2;
 const NODE_RADIUS = 32;
 const TEXT_GAP = 20; // gap between icon edge and text block
 
-/* ── Build the SVG path ────────────────────────────────────────── */
+/* ΓöÇΓöÇ Build the SVG path ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */
 function buildWavePath(count) {
   const points = [];
 
@@ -73,7 +73,7 @@ function buildWavePath(count) {
   return { d, points };
 }
 
-/* ── Component ─────────────────────────────────────────────────── */
+/* ΓöÇΓöÇ Component ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */
 export default function Timeline() {
   const scrollRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -103,6 +103,26 @@ export default function Timeline() {
     scrollRef.current.scrollLeft = scrollLeft - walk;
   };
 
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    
+    const handleWheel = (e) => {
+      if (e.deltaY !== 0) {
+        const atLeft = el.scrollLeft === 0;
+        const atRight = Math.ceil(el.scrollLeft + el.clientWidth) >= el.scrollWidth;
+        
+        if ((e.deltaY < 0 && !atLeft) || (e.deltaY > 0 && !atRight)) {
+          e.preventDefault();
+          el.scrollLeft += e.deltaY;
+        }
+      }
+    };
+    
+    el.addEventListener('wheel', handleWheel, { passive: false });
+    return () => el.removeEventListener('wheel', handleWheel);
+  }, []);
+
   const totalWidth = PADDING_X * 2 + (steps.length - 1) * NODE_SPACING;
   const { d, points } = buildWavePath(steps.length);
 
@@ -113,7 +133,7 @@ export default function Timeline() {
     >
       {/* Section heading */}
       <div className="text-center mb-4 pointer-events-auto px-4">
-        <h2 className="w-fit mx-auto text-4xl md:text-5xl font-heading font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-cyber-blue drop-shadow-[0_0_15px_rgba(14,165,233,0.5)] tracking-wider">
+        <h2 className="text-4xl md:text-5xl font-heading font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-cyber-blue drop-shadow-[0_0_15px_rgba(14,165,233,0.5)] tracking-wider">
           TIMELINE
         </h2>
         <p className="mt-4 text-cyber-silver max-w-xl mx-auto text-lg">
@@ -144,7 +164,7 @@ export default function Timeline() {
             minWidth: totalWidth,
           }}
         >
-          {/* ── SVG wave line ── */}
+          {/* ΓöÇΓöÇ SVG wave line ΓöÇΓöÇ */}
           <svg
             className="absolute top-[60px] left-0"
             width={totalWidth}
@@ -192,7 +212,7 @@ export default function Timeline() {
             </defs>
           </svg>
 
-          {/* ── Nodes + Labels ── */}
+          {/* ΓöÇΓöÇ Nodes + Labels ΓöÇΓöÇ */}
           {steps.map((step, i) => {
             const pt = points[i];
             const isBottom = i % 2 === 0; // 1,3,5 are at bottom troughs
@@ -214,7 +234,7 @@ export default function Timeline() {
                   height: '100%',
                 }}
               >
-                {/* White circle icon — centered exactly on the wave point */}
+                {/* White circle icon ΓÇö centered exactly on the wave point */}
                 <motion.div
                   className="absolute z-10 rounded-full bg-white flex items-center justify-center shadow-[0_0_25px_rgba(255,255,255,0.3)]"
                   style={{
@@ -231,7 +251,7 @@ export default function Timeline() {
                   <Icon className="w-7 h-7 text-gray-800" strokeWidth={1.8} />
                 </motion.div>
 
-                {/* Text block — on the OPPOSITE side from where the wave curves */}
+                {/* Text block ΓÇö on the OPPOSITE side from where the wave curves */}
                 <motion.div
                   className="absolute flex flex-col items-center text-center w-72"
                   style={{

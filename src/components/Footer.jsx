@@ -91,7 +91,7 @@ export default function Footer() {
                     </svg>
                     <span>Instagram</span>
                   </a>
-                  <a href="#" className="flex items-center space-x-3 text-cyber-silver hover:text-[#1F51FF] transition-colors duration-300 w-fit group">
+                  <a href="https://www.linkedin.com/company/andropedia-club/" target="_blank" rel="noreferrer" className="flex items-center space-x-3 text-cyber-silver hover:text-[#1F51FF] transition-colors duration-300 w-fit group">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 group-hover:text-[#1F51FF] transition-colors">
                       <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
                       <rect width="4" height="12" x="2" y="9" />

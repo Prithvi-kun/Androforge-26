@@ -63,7 +63,7 @@ export default function Community() {
             <p className="text-sm text-gray-400 mb-8 flex-1">
               Professional updates, sponsor announcements, network building, and career opportunities.
             </p>
-            <a href="https://linkedin.com/company/androforge" target="_blank" rel="noreferrer" className="w-full py-3 px-4 rounded bg-blue-500/10 text-blue-400 border border-blue-500/30 hover:bg-blue-500 hover:text-white transition-all font-mono text-sm uppercase tracking-wider font-bold">
+            <a href="https://www.linkedin.com/company/andropedia-club/" target="_blank" rel="noreferrer" className="w-full py-3 px-4 rounded bg-blue-500/10 text-blue-400 border border-blue-500/30 hover:bg-blue-500 hover:text-white transition-all font-mono text-sm uppercase tracking-wider font-bold">
               Connect →
             </a>
           </motion.div>
